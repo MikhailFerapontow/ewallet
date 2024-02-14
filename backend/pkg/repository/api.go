@@ -65,3 +65,12 @@ func (r *ApiPostgres) SendMoney(fromId string, input models.SendMoneyInput) erro
 
 	return tx.Commit()
 }
+
+func (r *ApiPostgres) GetHistory(id string) ([]models.Transaction, error) {
+	var transactions []models.Transaction
+
+	query := fmt.Sprintf("SELECT * FROM %s WHERE \"from\" = $1 OR \"to\" = $1", transactionTable)
+	err := r.db.Select(&transactions, query, id)
+
+	return transactions, err
+}

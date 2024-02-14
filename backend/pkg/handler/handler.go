@@ -17,6 +17,9 @@ func NewHandler(services *service.Service) *Handler {
 func (h *Handler) InitRoutes() *gin.Engine {
 	router := gin.New()
 
+	router.Use(gin.Recovery())
+	router.Use(gin.Logger())
+
 	api := router.Group("/api/v1/wallet")
 	{
 		api.POST("/", h.newWallet)

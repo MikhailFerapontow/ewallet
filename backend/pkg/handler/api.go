@@ -37,7 +37,15 @@ func (h *Handler) sendMoney(c *gin.Context) {
 }
 
 func (h *Handler) getHistory(c *gin.Context) {
+	id := c.Param("id")
 
+	transactions, err := h.services.Api.GetHistory(id)
+	if err != nil {
+		newErrorResponse(c, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	c.JSON(http.StatusOK, transactions)
 }
 
 func (h *Handler) getWallet(c *gin.Context) {

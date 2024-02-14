@@ -31,3 +31,12 @@ func (s *ApiService) GetWallet(id string) (models.Wallet, error) {
 func (s *ApiService) SendMoney(fromId string, input models.SendMoneyInput) error {
 	return s.repo.SendMoney(fromId, input)
 }
+
+func (s *ApiService) GetHistory(id string) ([]models.Transaction, error) {
+	transactions, err := s.repo.GetHistory(id)
+	if err != nil {
+		return []models.Transaction{}, err
+	}
+
+	return transactions, nil
+}

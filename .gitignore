@@ -34,3 +34,5 @@
 
 # Go workspace file
 go.work
+text.http
+bruh.sql
