@@ -15,5 +15,16 @@ services:
     image:
       postgres:latest
 
+  swagger-ui:
+    image: "swaggerapi/swagger-ui:v5.9.0"
+    container_name: swagger_ui
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./doc:/spec:ro
+    environment:
+      - BASE_URL=/swagger
+      - SWAGGER_JSON=/spec/openapi.yaml
+
 volumes:
   postgres:
