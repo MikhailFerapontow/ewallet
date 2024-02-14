@@ -27,3 +27,7 @@ func (s *ApiService) GetWallet(id string) (models.Wallet, error) {
 
 	return wallet, nil
 }
+
+func (s *ApiService) SendMoney(fromId string, input models.SendMoneyInput) error {
+	return s.repo.SendMoney(fromId, input)
+}

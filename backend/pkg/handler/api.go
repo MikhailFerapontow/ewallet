@@ -2,6 +2,7 @@ package handler
 
 import (
 	"net/http"
+	"server/models"
 
 	"github.com/gin-gonic/gin"
 )
@@ -19,7 +20,20 @@ func (h *Handler) newWallet(c *gin.Context) {
 }
 
 func (h *Handler) sendMoney(c *gin.Context) {
+	var input models.SendMoneyInput
 
+	if err := c.BindJSON(&input); err != nil {
+		op := " binding" //УБРАТЬ
+		newErrorResponse(c, http.StatusBadRequest, err.Error()+op)
+		return
+	}
+
+	fromId := c.Param("id")
+
+	if err := h.services.Api.SendMoney(fromId, input); err != nil {
+		newErrorResponse(c, http.StatusBadRequest, err.Error())
+		return
+	}
 }
 
 func (h *Handler) getHistory(c *gin.Context) {

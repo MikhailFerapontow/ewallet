@@ -6,3 +6,8 @@ type Transaction struct {
 	To     string  `json:"to"`
 	Amount float64 `json:"amount"`
 }
+
+type SendMoneyInput struct {
+	To     string  `json:"to"`
+	Amount float64 `json:"amount"`
+}
