@@ -57,7 +57,5 @@ func (h *Handler) getWallet(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, map[string]interface{}{
-		"wallet": data,
-	})
+	c.JSON(http.StatusOK, data)
 }
