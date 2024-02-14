@@ -1,0 +1,12 @@
+port: "3000"
+
+db:
+  username: "admin"
+  password: "root"
+  dbname: "ewallet"
+  host: "localhost"
+  port: "5432"
+  sslmode: "disable"
+
+logger:
+  level: "local"
