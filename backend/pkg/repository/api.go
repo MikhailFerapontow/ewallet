@@ -2,6 +2,7 @@ package repository
 
 import (
 	"fmt"
+	"server/models"
 
 	"github.com/jmoiron/sqlx"
 )
@@ -25,4 +26,12 @@ func (r *ApiPostgres) NewWallet() (string, error) {
 		return "", err
 	}
 	return id, nil
+}
+
+func (r *ApiPostgres) GetWallet(id string) (models.Wallet, error) {
+	var wallet models.Wallet
+
+	query := fmt.Sprintf("SELECT * FROM %s WHERE id = $1", walletTable)
+	err := r.db.Get(&wallet, query, id)
+	return wallet, err
 }

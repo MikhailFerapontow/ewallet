@@ -1,9 +1,14 @@
 package repository
 
-import "github.com/jmoiron/sqlx"
+import (
+	"server/models"
+
+	"github.com/jmoiron/sqlx"
+)
 
 type Api interface {
 	NewWallet() (string, error)
+	GetWallet(id string) (models.Wallet, error)
 }
 
 type Repository struct {

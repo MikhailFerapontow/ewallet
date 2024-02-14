@@ -1,9 +1,13 @@
 package service
 
-import "server/pkg/repository"
+import (
+	"server/models"
+	"server/pkg/repository"
+)
 
 type Api interface {
 	NewWallet() (string, error)
+	GetWallet(id string) (models.Wallet, error)
 }
 
 type Service struct {
