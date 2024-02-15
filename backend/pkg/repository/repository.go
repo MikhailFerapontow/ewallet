@@ -7,7 +7,7 @@ import (
 )
 
 type Api interface {
-	NewWallet() (string, error)
+	NewWallet() (models.Wallet, error)
 	GetWallet(id string) (models.Wallet, error)
 	SendMoney(fromId string, input models.SendMoneyInput) error
 	GetHistory(id string) ([]models.Transaction, error)

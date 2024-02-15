@@ -15,7 +15,7 @@ func newApiService(repo repository.Api) *ApiService {
 	}
 }
 
-func (s *ApiService) NewWallet() (string, error) {
+func (s *ApiService) NewWallet() (models.Wallet, error) {
 	return s.repo.NewWallet()
 }
 

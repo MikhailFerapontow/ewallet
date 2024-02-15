@@ -13,16 +13,14 @@ func (h *Handler) newWallet(c *gin.Context) {
 	const op = "handler.newWallet"
 	log := h.log.With(slog.String("op", op))
 
-	id, err := h.services.Api.NewWallet()
+	wallet, err := h.services.Api.NewWallet()
 	if err != nil {
 		log.Debug("Error in request", logger.Err(err))
 		c.AbortWithStatus(http.StatusBadRequest)
 		return
 	}
 
-	c.JSON(http.StatusOK, map[string]interface{}{
-		"id": id,
-	})
+	c.JSON(http.StatusOK, wallet)
 }
 
 func (h *Handler) sendMoney(c *gin.Context) {

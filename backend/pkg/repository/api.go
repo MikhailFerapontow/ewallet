@@ -18,15 +18,15 @@ func newApiPostgres(db *sqlx.DB) *ApiPostgres {
 	}
 }
 
-func (r *ApiPostgres) NewWallet() (string, error) {
-	var id string
+func (r *ApiPostgres) NewWallet() (models.Wallet, error) {
+	var wallet models.Wallet
 
-	query := fmt.Sprintf("INSERT INTO %s (balance) VALUES ('100') RETURNING id", walletTable)
+	query := fmt.Sprintf("INSERT INTO %s (balance) VALUES ('100') RETURNING id, balance", walletTable)
 	row := r.db.QueryRow(query)
-	if err := row.Scan(&id); err != nil {
-		return "", err
+	if err := row.Scan(&wallet.Id, &wallet.Balance); err != nil {
+		return models.Wallet{}, err
 	}
-	return id, nil
+	return wallet, nil
 }
 
 func (r *ApiPostgres) GetWallet(id string) (models.Wallet, error) {
