@@ -5,6 +5,8 @@ import (
 	"server/pkg/repository"
 )
 
+//go:generate mockgen -source=service.go -destination=mocks/service.go
+
 type Api interface {
 	NewWallet() (models.Wallet, error)
 	GetWallet(id string) (models.Wallet, error)

@@ -14,6 +14,8 @@ services:
       - ./migratoins:/docker-entrypoint-initdb.d
     image:
       postgres:latest
+    networks:
+      - server_network
 
   swagger-ui:
     image: "swaggerapi/swagger-ui:v5.9.0"
@@ -26,5 +28,17 @@ services:
       - BASE_URL=/swagger
       - SWAGGER_JSON=/spec/openapi.yaml
 
+  server:
+    container_name: server
+    build: backend/
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+    networks:
+      - server_network
 volumes:
   postgres:
+
+networks:
+  server_network:

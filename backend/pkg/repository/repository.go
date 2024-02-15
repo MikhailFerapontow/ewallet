@@ -6,6 +6,8 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
+//go:generate mockgen -source=repository.go -destination=mocks/repository.go
+
 type Api interface {
 	NewWallet() (models.Wallet, error)
 	GetWallet(id string) (models.Wallet, error)
