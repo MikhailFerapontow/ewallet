@@ -15,7 +15,7 @@ func (h *Handler) newWallet(c *gin.Context) {
 
 	wallet, err := h.services.Api.NewWallet()
 	if err != nil {
-		log.Debug("Error in request", logger.Err(err))
+		log.Info("Error in request", logger.Err(err))
 		c.AbortWithStatus(http.StatusBadRequest)
 		return
 	}
@@ -30,15 +30,22 @@ func (h *Handler) sendMoney(c *gin.Context) {
 	var input models.SendMoneyInput
 
 	if err := c.BindJSON(&input); err != nil {
-		log.Debug("Error in request", logger.Err(err))
+		log.Info("Binding JSON failed", logger.Err(err))
 		c.AbortWithStatus(http.StatusBadRequest)
 		return
 	}
 
 	fromId := c.Param("id")
 
+	_, err := h.services.Api.GetWallet(fromId)
+	if err != nil {
+		log.Info("Sender wallet not found", logger.Err(err))
+		c.AbortWithStatus(http.StatusNotFound)
+		return
+	}
+
 	if err := h.services.Api.SendMoney(fromId, input); err != nil {
-		log.Debug("Error in request", logger.Err(err))
+		log.Info("Error in request", logger.Err(err))
 		c.AbortWithStatus(http.StatusBadRequest)
 		return
 	}
@@ -50,10 +57,17 @@ func (h *Handler) getHistory(c *gin.Context) {
 
 	id := c.Param("id")
 
+	_, err := h.services.Api.GetWallet(id)
+	if err != nil {
+		log.Info("Wallet not found", logger.Err(err))
+		c.AbortWithStatus(http.StatusNotFound)
+		return
+	}
+
 	transactions, err := h.services.Api.GetHistory(id)
 	if err != nil {
-		log.Debug("Error in request", logger.Err(err))
-		c.AbortWithStatus(http.StatusBadRequest)
+		log.Info("Error in request", logger.Err(err))
+		c.AbortWithStatus(http.StatusNotFound)
 		return
 	}
 
@@ -68,8 +82,8 @@ func (h *Handler) getWallet(c *gin.Context) {
 
 	data, err := h.services.Api.GetWallet(id)
 	if err != nil {
-		log.Debug("Error in request", logger.Err(err))
-		c.AbortWithStatus(http.StatusBadRequest)
+		log.Info("Wallet not found", logger.Err(err))
+		c.AbortWithStatus(http.StatusNotFound)
 		return
 	}
 

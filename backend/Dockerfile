@@ -12,4 +12,4 @@ RUN go build -o ./build cmd/main.go
 
 EXPOSE 3000
 
-CMD ["sh", "-c", "sleep 60 && ./build"]
+CMD ["sh", "-c", "sleep 30 && ./build"]
